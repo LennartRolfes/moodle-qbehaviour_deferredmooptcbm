@@ -33,4 +33,4 @@ $plugin->dependencies = array(
     'qbehaviour_deferredmoopt' => 2021120300
 );
 
-$plugin->maturity  = MATURITY_STABLE;
+$plugin->maturity  = MATURITY_ALPHA;
