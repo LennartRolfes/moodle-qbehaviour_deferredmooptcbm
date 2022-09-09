@@ -94,21 +94,22 @@ class qbehaviour_deferredmooptcbm extends qbehaviour_deferredmoopt {
 
     public function process_gradingresult(question_attempt_pending_step $pendingstep) {
         $status = parent::process_gradingresult($pendingstep);
+
         if ($status == question_attempt::KEEP) {
             $fraction = $pendingstep->get_fraction();
-            if ($this->qa->get_last_behaviour_var('certainty') != null) {
-                $certainty = $this->qa->get_last_behaviour_var('certainty');
+            if ($this->qa->get_last_step()->has_behaviour_var('certainty')) {
+                $certainty = $this->qa->get_last_step()->get_behaviour_var('certainty');
             } else {
                 $certainty = question_cbm::default_certainty();
                 $pendingstep->set_behaviour_var('_assumedcertainty', $certainty);
             }
+
             if (!is_null($fraction)) {
                 $pendingstep->set_behaviour_var('_rawfraction', $fraction);
                 $pendingstep->set_fraction(question_cbm::adjust_fraction($fraction, $certainty));
             }
             $pendingstep->set_new_response_summary(
-                question_cbm::summary_with_certainty($pendingstep->get_new_response_summary(),
-                    $this->qa->get_last_behaviour_var('certainty')));
+                question_cbm::summary_with_certainty($pendingstep->get_new_response_summary(), $certainty));
         }
         return $status;
     }
