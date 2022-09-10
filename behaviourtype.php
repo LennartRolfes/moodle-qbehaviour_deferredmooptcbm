@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once(__DIR__ . '/../deferredfeedback/behaviourtype.php');
+require_once(__DIR__ . '/../deferredmoopt/behaviourtype.php');
 
 
 /**
